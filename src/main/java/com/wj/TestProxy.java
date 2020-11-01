@@ -8,16 +8,16 @@ import java.lang.reflect.Proxy;
  * 工人接口
  */
 interface Worker {
-    void work();
+    void work(String workName);
 }
 
 /**
  * Worker实现类。计算机工人
  */
 class ComputerWorker implements Worker {
-    @Override
-    public void work() {
-        System.out.println("computer worker work");
+
+    public void work(String workName) {
+        System.out.println("computer worker work " + workName);
     }
 }
 
@@ -32,10 +32,9 @@ class WorkerStsticProxy implements Worker {
         this.worker = worker;
     }
 
-    @Override
-    public void work() {
+    public void work(String workName) {
         preWork();
-        this.worker.work();
+        this.worker.work(workName);
         afterWork();
     }
 
@@ -97,7 +96,7 @@ public class TestProxy {
     public static void staticProxyTest() {
         Worker worker = new ComputerWorker();
         WorkerStsticProxy workerStaticProxy = new WorkerStsticProxy(worker);
-        workerStaticProxy.work();
+        workerStaticProxy.work("111");
     }
 
     /**
@@ -116,7 +115,7 @@ public class TestProxy {
                 // 动态代理处理对象
                 workerDynamicProxyHandler
         );
-        dynamicProxy.work();
+        dynamicProxy.work("111");
     }
 
     public static void main(String[] args) throws Exception {
